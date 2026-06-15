@@ -30,6 +30,19 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './public'  # replace with your blog's output directory
+      
+      - name: Debug - List all files
+        run: |
+          echo "Current directory structure:"
+          ls -la
+          echo ""
+          echo "Checking for common output directories:"
+          for dir in public _site dist build output; do
+            if [ -d "$dir" ]; then
+              echo "Found directory: $dir"
+              ls -la "$dir"
+            fi
+          done
 
   deploy:
     needs: build
