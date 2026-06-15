@@ -1,0 +1,66 @@
+{{define "post"}}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Post.Title}} - {{.Site.Site.Title}}</title>
+    <meta name="description" content="{{.Post.Description}}">
+    <link rel="canonical" href="{{absURL .CanonicalPath}}">
+    <meta name="myblog-base-url" content="{{baseURL}}">
+    <link rel="stylesheet" href="{{relURL "themes/light.css"}}" id="theme-stylesheet">
+    {{if .SearchEnabled}}<script src="{{relURL "static/search.js"}}" defer></script>{{end}}
+    <script src="{{relURL "static/theme-switcher.js"}}" defer></script>
+    <script src="{{relURL "static/sidebar-toggle.js"}}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="header-title">
+                <h1><a href="{{baseURL}}">{{.Site.Site.Title}}</a></h1>
+                <p class="site-description">{{.Site.Site.Description}}</p>
+            </div>
+            <div class="header-controls">
+                <div class="rss-container">
+                    <a id="rss-toggle" href="{{relURL "feed.xml"}}" aria-label="RSS Feed" title="RSS Feed"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+                </div>
+                <button id="sidebar-toggle" aria-label="Toggle sidebar" title="Toggle sidebar"></button>
+                <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"></button>
+            </div>
+        </header>
+
+        <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+        <div class="main-layout {{if .SidebarLeft}}sidebar-left{{else}}sidebar-right{{end}}">
+            <main class="content">
+                <article class="post">
+                    <header class="post-header">
+                        <h1>{{.Post.Title}}</h1>
+                        <div class="post-meta">
+                            <time datetime="{{.Post.Date | formatISO}}">{{.Post.Date | formatDate}}</time>
+                            {{if .Post.Tags}}
+                            <span class="tags">
+                                {{range .Post.Tags}}<span class="tag">{{.}}</span>{{end}}
+                            </span>
+                            {{end}}
+                        </div>
+                    </header>
+                    <div class="post-content">
+                        {{.Content}}
+                    </div>
+                </article>
+            </main>
+
+            <aside class="sidebar" aria-hidden="false">
+                {{template "sidebar" .}}
+            </aside>
+        </div>
+        <button id="sidebar-edge-handle" class="sidebar-edge-handle" aria-label="Open sidebar" title="Open sidebar" aria-hidden="true" tabindex="-1">
+            <span class="sidebar-edge-handle-icon" aria-hidden="true"></span>
+        </button>
+
+        <footer class="site-footer">
+            <p>&copy; {{now | formatDate}} {{.Site.Site.Author}}</p>
+        </footer>
+    </div>
+</body>
+</html>
+{{end}}

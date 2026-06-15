@@ -1,0 +1,33 @@
+{{define "sidebar"}}
+<div class="sidebar-content">
+    {{if .SearchEnabled}}
+    <section class="search">
+        <h3>Search</h3>
+        <input type="text" id="search-input" placeholder="Search posts...">
+        <div id="search-results"></div>
+    </section>
+    {{end}}
+
+    {{if and .Site.Sidebar.ShowTags .Tags}}
+    <section class="tag-cloud sidebar-tags">
+        <h3>Tags</h3>
+        <div class="tags">
+            {{range $tag, $count := .Tags}}
+            <a href="{{relURL (printf "tags/%s.html" ($tag | urlize))}}" class="tag">{{$tag}}</a>
+            {{end}}
+        </div>
+    </section>
+    {{end}}
+
+    {{if and .Site.Sidebar.ShowRecent .RecentPosts}}
+    <section class="recent-posts">
+        <h3>Recent Posts</h3>
+        <ul>
+            {{range .RecentPosts}}
+            <li><a href="{{relURL (printf "posts/%s.html" .Slug)}}">{{.Title}}</a></li>
+            {{end}}
+        </ul>
+    </section>
+    {{end}}
+</div>
+{{end}}
