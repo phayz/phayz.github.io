@@ -5,8 +5,6 @@ tags: ["markdown", "tutorial"]
 description: "Exploring Markdown syntax"
 ---
 
-# Markdown Features
-
 Here are some of the Markdown features supported by this blog:
 
 ## Lists
