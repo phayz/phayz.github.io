@@ -2,13 +2,17 @@ name: Build and Deploy Blog
 
 on:
   push:
-    branches: [ main ]  # or master, depending on your default branch
-  workflow_dispatch:     # allows manual triggering
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -19,10 +23,21 @@ jobs:
 
       - name: Build blog
         run: |
-          # Make your binary executable and run it
           chmod +x ./blog.sh
           chmod +x ./blog-darwin-arm64
           ./blog.sh --build
+
+      - name: Debug - List output
+        run: |
+          echo "=== Repo root ==="
+          ls -la
+          echo "=== Checking output dirs ==="
+          for dir in public _site dist build output; do
+            if [ -d "$dir" ]; then
+              echo "Found: $dir"
+              ls -la "$dir"
+            fi
+          done
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -30,20 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './public'  # replace with your blog's output directory
-      
-      - name: Debug - List all files
-        run: |
-          echo "Current directory structure:"
-          ls -la
-          echo ""
-          echo "Checking for common output directories:"
-          for dir in public _site dist build output; do
-            if [ -d "$dir" ]; then
-              echo "Found directory: $dir"
-              ls -la "$dir"
-            fi
-          done
+          path: './public'
 
   deploy:
     needs: build
