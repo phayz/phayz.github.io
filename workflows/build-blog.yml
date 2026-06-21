@@ -21,6 +21,7 @@ jobs:
         run: |
           # Make your binary executable and run it
           chmod +x ./blog.sh
+          chmod +x ./blog-darwin-arm64
           ./blog.sh --build
 
       - name: Setup Pages
