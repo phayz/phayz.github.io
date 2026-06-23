@@ -1,4 +1,4 @@
-name: Check Links
+name: Link Check
 
 on:
   workflow_call:

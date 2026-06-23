@@ -1,4 +1,5 @@
-# pr.yml
+name: PR Validation
+
 on:
   pull_request:
 
@@ -15,4 +16,4 @@ jobs:
           ./blog-linux-amd64 --build
 
   validate:
-    uses: ./.github/workflows/check-links.yml
+    uses: ./.github/workflows/link-check.yml

@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   links:
-    uses: ./.github/workflows/check-links.yml
+    uses: ./.github/workflows/link-check.yml
 
   build:
     runs-on: ubuntu-latest
