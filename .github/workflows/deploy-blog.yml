@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+jobs:
+  links:
+    uses: ./.github/workflows/link-check.yml
+
 permissions:
   contents: read
   pages: write
@@ -22,10 +26,9 @@ jobs:
       - name: Generate site
         run: |
           chmod +x ./blog-linux-amd64
-          # chmod +x ./blog.sh
           ./blog-linux-amd64 --build
 
-      - uses: actions/upload-pages-artifact@v5.0.0
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
@@ -34,4 +37,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/deploy-pages@v5.0.0
+      - uses: actions/deploy-pages@v5

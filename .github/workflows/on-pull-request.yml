@@ -1,0 +1,20 @@
+# pr.yml
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        run: |
+          git clone https://github.com/${{ github.repository }} .
+
+      - name: Generate site
+        run: |
+          chmod +x ./blog-linux-amd64
+          ./blog-linux-amd64 --build
+
+  validate:
+    uses: ./.github/workflows/link-check.yml
