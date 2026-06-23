@@ -18,4 +18,4 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: ./public
+          args: --root-dir public public
