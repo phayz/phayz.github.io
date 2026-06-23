@@ -5,23 +5,20 @@ on:
     branches:
       - main
 
-jobs:
-  links:
-    uses: ./.github/workflows/link-check.yml
-
 permissions:
   contents: read
   pages: write
   id-token: write
 
 jobs:
+  links:
+    uses: ./.github/workflows/check-links.yml
+
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repository
-        run: |
-          git clone https://github.com/${{ github.repository }} .
+      - uses: actions/checkout@v5
 
       - name: Generate site
         run: |
@@ -33,7 +30,7 @@ jobs:
           path: public
 
   deploy:
-    needs: build
+    needs: [build, links]
     runs-on: ubuntu-latest
 
     steps:

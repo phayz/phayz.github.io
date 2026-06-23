@@ -7,9 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repository
-        run: |
-          git clone https://github.com/${{ github.repository }} .
+      - uses: actions/checkout@v5
 
       - name: Generate site
         run: |
@@ -17,4 +15,4 @@ jobs:
           ./blog-linux-amd64 --build
 
   validate:
-    uses: ./.github/workflows/link-check.yml
+    uses: ./.github/workflows/check-links.yml
